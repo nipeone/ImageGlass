@@ -2370,7 +2370,7 @@ namespace ImageGlass {
         private NavigationRegion TestCursorHitNavRegions(Point point) {
             if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
                 return null;
-
+            // fit in c# langVersion 7.3
             var item = Local.NavRegions.Find(_item => _item.Region.Contains(point));
 
             // the given point is not in the hit regions
