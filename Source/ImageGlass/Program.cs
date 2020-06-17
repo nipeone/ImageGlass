@@ -184,15 +184,17 @@ namespace ImageGlass {
         /// <param name="useAutoCheck">If TRUE, use "igautoupdate"; else "igupdate" for argument</param>
         public static void CheckForUpdate(bool useAutoCheck = false) {
             Task.Run(() => {
-                using var p = new Process();
-                p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
-                p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
-                p.Start();
+                using (var p = new Process())
+                {
+                    p.StartInfo.FileName = App.StartUpDir("igcmd.exe");
+                    p.StartInfo.Arguments = useAutoCheck ? "igautoupdate" : "igupdate";
+                    p.Start();
 
-                p.WaitForExit();
+                    p.WaitForExit();
 
-                // There is a newer version
-                Configs.IsNewVersionAvailable = p.ExitCode == 1;
+                    // There is a newer version
+                    Configs.IsNewVersionAvailable = p.ExitCode == 1;
+                }
 
                 // save last update
                 Configs.AutoUpdate = DateTime.Now.ToString("M/d/yyyy HH:mm:ss");

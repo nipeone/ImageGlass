@@ -2152,26 +2152,30 @@ namespace ImageGlass {
 
 
             e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            using var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor)));
-            var font = new Font(this.Font.FontFamily, 30f);
-            var fontSize = e.Graphics.MeasureString(text, font);
+            using (var textBrush = new SolidBrush(Color.FromArgb(150, Theme.InvertBlackAndWhiteColor(picMain.BackColor))))
+            {
+                var font = new Font(this.Font.FontFamily, 30f);
+                var fontSize = e.Graphics.MeasureString(text, font);
 
-            // calculate background size
-            var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
-            var bgX = picMain.Width - bgSize.Width - gap;
-            var bgY = picMain.Height - bgSize.Height - gap;
+                // calculate background size
+                var bgSize = new SizeF(fontSize.Width + gap, fontSize.Height + gap);
+                var bgX = picMain.Width - bgSize.Width - gap;
+                var bgY = picMain.Height - bgSize.Height - gap;
 
-            // calculate text size
-            var fontX = bgX + bgSize.Width/2 - fontSize.Width/2;
-            var fontY = bgY + bgSize.Height/2 - fontSize.Height/2;
+                // calculate text size
+                var fontX = bgX + bgSize.Width / 2 - fontSize.Width / 2;
+                var fontY = bgY + bgSize.Height / 2 - fontSize.Height / 2;
 
-            // draw background
-            using var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor));
-            e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
+                // draw background
+                using (var bgBrush = new SolidBrush(Color.FromArgb(150, picMain.BackColor)))
+                {
+                    e.Graphics.FillRectangle(bgBrush, bgX, bgY, bgSize.Width, bgSize.Height);
 
 
-            // draw countdown text
-            e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+                    // draw countdown text
+                    e.Graphics.DrawString(text, font, textBrush, fontX, fontY);
+                }
+            }
         }
 
 
@@ -2367,7 +2371,7 @@ namespace ImageGlass {
             if (!Configs.IsShowNavigationButtons || picMain.IsPanning)
                 return null;
 
-            var item = Local.NavRegions.Find(item => item.Region.Contains(point));
+            var item = Local.NavRegions.Find(_item => _item.Region.Contains(point));
 
             // the given point is not in the hit regions
             if (item == null)
@@ -2437,8 +2441,8 @@ namespace ImageGlass {
             var iconPosY = (region.Height / 2) - (icon.Width / 2);
 
             // draw circle background for icon
-            using var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor);
-            e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
+            using (var sBrush = new SolidBrush(Configs.Theme.ToolbarBackgroundColor))
+                e.Graphics.FillEllipse(sBrush, new RectangleF(iconPosX, iconPosY, icon.Width, icon.Height));
 
             // draw arrow icon
             e.Graphics.DrawImage(icon, iconPosX, iconPosY);

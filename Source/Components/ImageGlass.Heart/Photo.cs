@@ -266,7 +266,7 @@ namespace ImageGlass.Heart {
                     isApplyColorProfileForAll,
                     quality,
                     channel: channel,
-                    useEmbeddedThumbnail
+                    useEmbeddedThumbnails: useEmbeddedThumbnail
                 );
             }).ConfigureAwait(false);
 
